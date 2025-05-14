@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>CLU Demo</title>
+</head>
+<body>
+    <h1>CLU Dialog Tester</h1>
+    <form id="inputForm">
+        <label>Enter Text: </label>
+        <input type="text" id="userInput" required>
+        <button type="submit">Analyze</button>
+    </form>
+
+    <pre id="result"></pre>
+
+    <script>
+        const form = document.getElementById("inputForm");
+        const resultBox = document.getElementById("result");
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+
+            const input = document.getElementById("userInput");
+
+            const res = await fetch("/analyze", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(input)
+            });
+
+            const data = await res.json();
+            resultBox.innerText = JSON.stringify(res, null, 2);
+        }
+
+    </script>
+</body>
+</html>
